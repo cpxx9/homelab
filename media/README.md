@@ -100,7 +100,6 @@ qbittorrent:
       - PUID=0
       - PGID=0
       - TZ=${TZ}
-      #- DOCKER_MODS=ghcr.io/gabe565/linuxserver-mod-vuetorrent
     volumes:
       - ${COMMON_PATH}:${COMMON_PATH}
       - ${COMMON_PATH}/configs/qbittorrent:/config
@@ -136,8 +135,6 @@ flaresolverr:
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=${TZ}
-      #- LANG=fr_FR
-      #- LANG=en_US
     ports:
       - 8191:8191
     restart: unless-stopped
