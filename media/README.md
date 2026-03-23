@@ -1,6 +1,6 @@
 # Isyrr
 
-Docker compose file to run the stack. You will still need to log in and configure each service once running.
+Docker compose file to run the stack. You will still need to log in and configure each service once running. \(See below\)
 
 Server Specs
 
