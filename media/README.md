@@ -42,7 +42,16 @@ Any one of these can be set depending on how specific you want your VPN connecti
 
 Below is each service in the compose file split up with more explanation.
 
-Homepage
+#### Homepage
+
+Paths needed:
+
+${COMMON_PATH}/configs/homepage/config
+
+${COMMON_PATH}/configs/homepage/images
+
+${COMMON_PATH}/configs/homepage/icons
+
 ```yaml
 homepage:
     image: ghcr.io/gethomepage/homepage:latest
@@ -63,7 +72,12 @@ homepage:
     restart: unless-stopped
 ```
 
-Gluetun
+#### Gluetun
+
+Paths needed:
+
+${COMMON_PATH}/configs/gluetun
+
 ```yaml
 nordvpn:
     container_name: gluetun
@@ -78,7 +92,7 @@ nordvpn:
       - 51820:51820
       - 51820:51820/udp
     volumes:
-      - ${COMMON_PATH}/configs/gluetun
+      - ${COMMON_PATH}/configs/gluetun:/gluetun
     environment:
       - VPN_SERVICE_PROVIDER=nordvpn
       - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
@@ -87,7 +101,14 @@ nordvpn:
     restart: always
 ```
 
-qBitTorrent
+#### qBitTorrent
+
+Paths needed:
+
+${COMMON_PATH}/configs/qbittorrent
+
+${DATA_PATH}/qbittorrent/downloads
+
 ```yaml
 qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -107,7 +128,13 @@ qbittorrent:
     restart: unless-stopped
 ```
 
-nzbget
+#### nzbget
+
+Paths needed:
+
+${COMMON_PATH}/configs/nzbget
+${DATA_PATH}/qbittorrent/downloads
+
 ```yaml
 nzbget:
     image: lscr.io/linuxserver/nzbget:latest
@@ -125,7 +152,8 @@ nzbget:
     network_mode: service:nordvpn
 ```
 
-Flaresolverr
+#### Flaresolverr
+
 ```yaml
 flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -140,7 +168,12 @@ flaresolverr:
     restart: unless-stopped
 ```
 
-Prowlarr
+#### Prowlarr
+
+Paths needed:
+
+${COMMON_PATH}/configs/prowlarr
+
 ```yaml
 prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -156,7 +189,12 @@ prowlarr:
     restart: unless-stopped
 ```
 
-Jackett
+#### Jackett
+
+Paths needed:
+
+${COMMON_PATH}/configs/jackett
+
 ```yaml
 jackett:
     image: lscr.io/linuxserver/jackett:latest
@@ -172,7 +210,16 @@ jackett:
     restart: unless-sto
 ```
 
-Sonarr
+#### Sonarr
+
+Paths needed:
+
+${COMMON_PATH}/configs/sonarr
+
+${DATA_PATH}/sonarr/tv
+
+${DATA_PATH}/qbittorrent/downloads
+
 ```yaml
 sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -191,7 +238,16 @@ sonarr:
     restart: unless-stopped
 ```
 
-Radarr
+#### Radarr
+
+Paths needed:
+
+${COMMON_PATH}/configs/radarr
+
+${DATA_PATH}/radarr/movies
+
+${DATA_PATH}/qbittorrent/downloads
+
 ```yaml
 radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -210,7 +266,20 @@ radarr:
     restart: unless-stopped
 ```
 
-Jellyfin
+#### Jellyfin
+
+Paths needed:
+
+${COMMON_PATH}/configs/jellyfin
+
+${COMMON_PATH}/jellyfin/cache
+
+${DATA_PATH}/sonarr/tv
+
+${DATA_PATH}/radarr/movies
+
+${DATA_PATH}/qbittorrent/downloads
+
 ```yaml
 jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -235,7 +304,12 @@ jellyfin:
     restart: unless-stopped
 ```
 
-Jellyseer (will be replaced with Seer soon)
+#### Jellyseer (will be replaced with Seer soon)
+
+Paths needed:
+
+${COMMON_PATH}/configs/jellyseerr
+
 ```yaml
 jellyseerr:
     image: fallenbagel/jellyseerr:latest
@@ -250,7 +324,16 @@ jellyseerr:
     restart: unless-stopped
 ```
 
-Bizarr
+#### Bizarr
+
+Paths needed:
+
+${COMMON_PATH}/configs/bazarr
+
+${DATA_PATH}/sonarr/tv
+
+${DATA_PATH}/radarr/movies
+
 ```yaml
 bazarr:
     image: lscr.io/linuxserver/bazarr:latest
@@ -269,7 +352,12 @@ bazarr:
     restart: unless-stopped
 ```
 
-Wizarr
+#### Wizarr
+
+Paths needed:
+
+${COMMON_PATH}/wizarr
+
 ```yaml
 wizarr:
     container_name: wizarr
@@ -284,7 +372,14 @@ wizarr:
       - TZ=${TZ}
 ```
 
-NginxProxyManager
+#### NginxProxyManager
+
+Paths needed:
+
+${COMMON_PATH}/npm/data
+
+${COMMON_PATH}/npm/letsencrypt
+
 ```yaml
 npm:
     container_name: npm
