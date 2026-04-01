@@ -449,10 +449,6 @@ Gluetun (Nord VPN) will be automatically configured to be used with the applicat
 2. Log in with the default credentials:
    - **Username**: `admin`
    - **Password**: `adminadmin`
-   
-<div style="text-align: center">
-    <img src="image/qBittorrent/qbit1.png" style="margin: 15px 10px;">
-</div>
 
    *Note: The default credentials may have changed, please check the documentation for updates on this. In most cases, qBittorrent Web UI will generate a temporary password when the container is started. To view this password, check the logs for this container with the command: `docker logs qbittorrent`*
 
@@ -464,10 +460,6 @@ Gluetun (Nord VPN) will be automatically configured to be used with the applicat
    - **When Category Save Path changed**: `Relocate affected torrents`
    - **Default Save Path**: `/downloads` 
 3. Click **SAVE**.
-
-<div style="text-align: center">
-    <img src="image/qBittorrent/qbit2.png" style="margin: 15px 10px;">
-</div>
 
 ### **Category Configuration**
 
@@ -482,17 +474,6 @@ Gluetun (Nord VPN) will be automatically configured to be used with the applicat
    - **Save path**: `/downloads/sonarr`
 6. Click **Add**.
 
-<div style="text-align: center">
-    <img src="image/qBittorrent/qbit3.png" style="margin: 15px 10px;">
-</div>
-
-<div style="text-align: center">
-    <img src="image/qBittorrent/qbit4.png" style="margin: 15px 10px;">
-    <img src="image/qBittorrent/qbit5.png" style="margin: 15px 10px;">
-</div>
-
-**[`^        back to top        ^`](#table-of-contents)**
-
 ---
 
 ## **Radarr**
@@ -502,10 +483,6 @@ Gluetun (Nord VPN) will be automatically configured to be used with the applicat
 1. Open the WebUI and go to **Settings** > **Media Management**.
 2. Click **Add Root Folder**, add the path `/COMMON_PATH/radarr/movies`, and click **OK**.
 3. Click **Show Advanced** at the top, scroll down to **Importing**, and make sure **Use Hardlinks instead of Copy** is enabled.
-
-<div style="text-align: center">
-    <img src="image/radarr/rad3.png" style="margin: 15px 10px;">
-</div>
 
 ### **Download Clients**
 
@@ -519,10 +496,6 @@ Gluetun (Nord VPN) will be automatically configured to be used with the applicat
    - **Category**: `radarr` (this should match the category set in qBittorrent)
 4. Click **Test**. If you see a checkmark, it means the connection is working; if not, there is an error.
 5. Click **Save**.
-
-<div style="text-align: center">
-    <img src="image/radarr/rad5.png" style="margin: 15px 10px;">
-</div>
 
 _Note: if entering `qbittorrent` as the Host does not work, try entering the IP address instead (ex: `192.168.x.x`)_
 
@@ -540,12 +513,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
 4. Click **Test**. If you see a checkmark, it means the connection is working; if not, there is an error.
 5. Click **Save**.
 
-<div style="text-align: center">
-    <img src="image/sonarr/son3.png" style="margin: 15px 10px;">
-</div>
-
-**[`^        back to top        ^`](#table-of-contents)**
-
 ---
 
 ## **Sonarr**
@@ -555,10 +522,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
 1. Open the WebUI and go to **Settings** > **Media Management**.
 2. Click **Add Root Folder**, add the path `/COMMON_PATH/sonarr/tv`, and click **OK**.
 3. Click **Show Advanced**, scroll down to **Importing**, and enable **Use Hardlinks instead of Copy**.
-
-<div style="text-align: center">
-    <img src="image/sonarr/son1.png" style="margin: 15px 10px;">
-</div>
 
 _Note: if entering `qbittorrent` as the Host does not work, try entering the IP address instead (ex: `192.168.x.x`)_
 
@@ -575,10 +538,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
 4. Click **Test**. If you see a checkmark, it means the connection is working.
 5. Click **Save**.
 
-<div style="text-align: center">
-    <img src="image/sonarr/son2.png" style="margin: 15px 10px;">
-</div>
-
 ### **Indexer Jackett (Optional)**
 
 1. In the WebUI, go to **Settings** > **Indexers**.
@@ -589,12 +548,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
    - **ApiKey**: Find the API key in the home menu at the top right.
 4. Click **Test**. If you see a checkmark, it means the connection is working; if not, there is an error.
 5. Click **Save**.
-
-<div style="text-align: center">
-    <img src="image/sonarr/son3.png" style="margin: 15px 10px;">
-</div>
-
-**[`^        back to top        ^`](#table-of-contents)**
 
 ---
 
@@ -619,10 +572,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
 3. Click **Test** to check the connection.
 4. Click **Save**.
 
-<div style="text-align: center">
-    <img src="image/prowlarr/pro1.png" style="margin: 15px 10px;">
-</div>
-
 ### **Configure Radarr**
 
 1. Go to **Settings** and click **Apps**.
@@ -634,10 +583,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
 3. Click **Test** to check the connection.
 4. Click **Save**.
 
-<div style="text-align: center">
-    <img src="image/prowlarr/pro2.png" style="margin: 15px 10px;">
-</div>
-
 ### **Configure Sonarr**
 
 1. Go to **Settings** and click **Apps**.
@@ -648,12 +593,6 @@ _Note: if entering `qbittorrent` as the Host does not work, try entering the IP 
    - **ApiKey**: Find the API key in the Sonarr interface under **Settings** > **General** > **API Key**.
 3. Click **Test** to check the connection.
 4. Click **Save**.
-
-<div style="text-align: center">
-    <img src="image/prowlarr/pro3.png" style="margin: 15px 10px;">
-</div>
-
-**[`^        back to top        ^`](#table-of-contents)**
 
 ---
 
@@ -695,8 +634,6 @@ If you want other users to access your Jellyfin server, you can create additiona
 4. Click **Save** to create the user.
 5. Repeat this process for all users you wish to add to the server.
 
-**[`^        back to top        ^`](#table-of-contents)**
-
 ---
 
 ## **Jellyseerr**
@@ -735,8 +672,6 @@ If you want other users to access your Jellyfin server, you can create additiona
    - **API Key**: Find the API key in the Sonarr interface under **Settings** > **General** > **API Key**.
 3. Click **Test** to check the connection.
 4. Click **Save Changes**.
-
-**[`^        back to top        ^`](#table-of-contents)**
 
 ---
 
