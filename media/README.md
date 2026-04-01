@@ -1,4 +1,4 @@
-# Isyrr
+# Server
 
 Docker compose file to run the stack. You will still need to log in and configure each service once running. \(See below\)
 
@@ -11,7 +11,7 @@ Server Specs
 | **Configs Disk** | 50gb SSD | 80gb SSD|
 | **Data Disk** | depends on size of library, HDD fine | depends on size of library, HDD fine |
 
-## Pre-Reqs
+# Pre-Reqs
 
 Docker
 
@@ -31,7 +31,7 @@ sh get-docker.sh
 usermod -aG docker <user>
 ```
 
-## Environment Variables
+# Environment Variables
 
 To run this stack, you will need to add the following environment variables to your .env file
 
@@ -58,11 +58,11 @@ Any one of these can be set depending on how specific you want your VPN connecti
 
 `SERVER_CITIES="New York City, Boston"`
 
-## Compose Configs
+# Compose Configs
 
 Below is each service in the compose file split up with more explanation.
 
-#### Homepage
+## Homepage
 
 Paths needed:
 
@@ -92,7 +92,7 @@ homepage:
     restart: unless-stopped
 ```
 
-#### Gluetun
+## Gluetun
 
 Paths needed:
 
@@ -121,7 +121,7 @@ nordvpn:
     restart: always
 ```
 
-#### qBitTorrent
+## qBitTorrent
 
 Paths needed:
 
@@ -148,7 +148,7 @@ qbittorrent:
     restart: unless-stopped
 ```
 
-#### nzbget
+## nzbget
 
 Paths needed:
 
@@ -173,7 +173,7 @@ nzbget:
     network_mode: service:nordvpn
 ```
 
-#### Flaresolverr
+## Flaresolverr
 
 ```yaml
 flaresolverr:
@@ -189,7 +189,7 @@ flaresolverr:
     restart: unless-stopped
 ```
 
-#### Prowlarr
+## Prowlarr
 
 Paths needed:
 
@@ -210,7 +210,7 @@ prowlarr:
     restart: unless-stopped
 ```
 
-#### Jackett
+## Jackett
 
 Paths needed:
 
@@ -231,7 +231,7 @@ jackett:
     restart: unless-sto
 ```
 
-#### Sonarr
+## Sonarr
 
 Paths needed:
 
@@ -259,7 +259,7 @@ sonarr:
     restart: unless-stopped
 ```
 
-#### Radarr
+## Radarr
 
 Paths needed:
 
@@ -287,7 +287,7 @@ radarr:
     restart: unless-stopped
 ```
 
-#### Jellyfin
+## Jellyfin
 
 Paths needed:
 
@@ -325,7 +325,7 @@ jellyfin:
     restart: unless-stopped
 ```
 
-#### Jellyseer (will be replaced with Seer soon)
+## Jellyseer (will be replaced with Seer soon)
 
 Paths needed:
 
@@ -345,7 +345,7 @@ jellyseerr:
     restart: unless-stopped
 ```
 
-#### Bizarr
+## Bizarr
 
 Paths needed:
 
@@ -373,7 +373,7 @@ bazarr:
     restart: unless-stopped
 ```
 
-#### Wizarr
+## Wizarr
 
 Paths needed:
 
@@ -393,7 +393,7 @@ wizarr:
       - TZ=${TZ}
 ```
 
-#### NginxProxyManager
+## NginxProxyManager
 
 Paths needed:
 
@@ -417,4 +417,429 @@ npm:
       - ${COMMON_PATH}/npm/letsencrypt:/etc/letsencrypt
 ```
 
+# Accessing Applications
 
+Once the applications are deployed, you can access them using the following addresses :
+
+> [!IMPORTANT]  
+> Replace `localhost` with the IP address of your machine or remote server if needed.
+
+
+* Jellyfin : http://localhost:8096
+* Jellyseer : http://localhost:5055
+* Sonarr : http://localhost:8989
+* Radarr : http://localhost:7878
+* Jackett : http://localhost:9117
+* Prowlarr : http://localhost:9696
+* qBittorrent : http://localhost:8080
+* nzbget : http://localhost:6789
+* Bazarr : http://localhost:6767
+
+Gluetun (Nord VPN) will be automatically configured to be used with the applications.
+
+## **Configuration Guide for Web Interfaces Only**
+
+> [!IMPORTANT]  
+> All links containing the container name can be replaced with either the server IP or `localhost`. Also, replace `/COMMON_PATH/` with the path you configured in the `.env` file.
+
+
+## **qBittorrent**
+
+1. Open the WebUI by clicking on the application icon in the **DOCKER** tab and selecting **WebUI**.
+2. Log in with the default credentials:
+   - **Username**: `admin`
+   - **Password**: `adminadmin`
+   
+<div style="text-align: center">
+    <img src="image/qBittorrent/qbit1.png" style="margin: 15px 10px;">
+</div>
+
+   *Note: The default credentials may have changed, please check the documentation for updates on this. In most cases, qBittorrent Web UI will generate a temporary password when the container is started. To view this password, check the logs for this container with the command: `docker logs qbittorrent`*
+
+1. Once logged in, click the gear icon to go to **Options**.
+2. Under the **Downloads** tab, configure the backup settings as follows:
+   - **Default Torrent Management Mode**: `Automatic` (required for category-based save paths to work)
+   - **When Torrent Category changed**: `Relocate torrent`
+   - **When Default Save Path changed**: `Relocate affected torrents`
+   - **When Category Save Path changed**: `Relocate affected torrents`
+   - **Default Save Path**: `/downloads` 
+3. Click **SAVE**.
+
+<div style="text-align: center">
+    <img src="image/qBittorrent/qbit2.png" style="margin: 15px 10px;">
+</div>
+
+### **Category Configuration**
+
+1. In the WebUI, expand **CATEGORIES** in the left menu. Right-click on **All** and select **Add category...**.
+2. In the **New Category** window, configure as follows:
+   - **Category**: `radarr` (this corresponds to the category you will later configure in Radarr)
+   - **Save path**: `/downloads/radarr`
+3. Click **Add**.
+4. Right-click on **All** again, select **Add category...**.
+5. Configure as follows:
+   - **Category**: `sonarr` (this should match the category configured later in Sonarr, by default `sonarr-tv`, but this guide uses `sonarr`)
+   - **Save path**: `/downloads/sonarr`
+6. Click **Add**.
+
+<div style="text-align: center">
+    <img src="image/qBittorrent/qbit3.png" style="margin: 15px 10px;">
+</div>
+
+<div style="text-align: center">
+    <img src="image/qBittorrent/qbit4.png" style="margin: 15px 10px;">
+    <img src="image/qBittorrent/qbit5.png" style="margin: 15px 10px;">
+</div>
+
+**[`^        back to top        ^`](#table-of-contents)**
+
+---
+
+## **Radarr**
+
+### **Media Management**
+
+1. Open the WebUI and go to **Settings** > **Media Management**.
+2. Click **Add Root Folder**, add the path `/COMMON_PATH/radarr/movies`, and click **OK**.
+3. Click **Show Advanced** at the top, scroll down to **Importing**, and make sure **Use Hardlinks instead of Copy** is enabled.
+
+<div style="text-align: center">
+    <img src="image/radarr/rad3.png" style="margin: 15px 10px;">
+</div>
+
+### **Download Clients**
+
+1. In the WebUI, go to **Settings** > **Download Clients**.
+2. Click **+** under **Download Clients**, then select **qBittorrent** from the **Add Download Client** window.
+3. Fill in the fields as follows:
+   - **Name**: `qBittorrent` (or another name of your choice)
+   - **Host**: `qbittorrent`
+   - **Username**: `admin`
+   - **Password**: `adminadmin` (change it if you've modified it in qBittorrent)
+   - **Category**: `radarr` (this should match the category set in qBittorrent)
+4. Click **Test**. If you see a checkmark, it means the connection is working; if not, there is an error.
+5. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/radarr/rad5.png" style="margin: 15px 10px;">
+</div>
+
+_Note: if entering `qbittorrent` as the Host does not work, try entering the IP address instead (ex: `192.168.x.x`)_
+
+> [!WARNING]
+> On new installations, Radarr may complain that the `/downloads/radarr` directory does not exist inside the container (this is generally flagged as an error by Radarr in  **System** > **Status**). To fix this, simply move into the directory `/COMMON_PATH/qbittorrent/downloads` and manually create the `radarr` directory. Then, simply delete qBittorrent from Radarr and re-add it -  you should see the error disappear.
+
+### **Indexer Jackett (Optional)**
+
+1. In the WebUI, go to **Settings** > **Indexers**.
+2. Click **+** under **Add Indexer**, then select **Torznab**.
+3. Fill in the fields as follows:
+   - **Name**: `Torznab` (or another name of your choice)
+   - **URL**: `http://Jackett:9117/api/v2.0/indexers/YOUR_INDEXERS/results/torznab/`
+   - **ApiKey**: Find the API key in the home menu at the top right.
+4. Click **Test**. If you see a checkmark, it means the connection is working; if not, there is an error.
+5. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/sonarr/son3.png" style="margin: 15px 10px;">
+</div>
+
+**[`^        back to top        ^`](#table-of-contents)**
+
+---
+
+## **Sonarr**
+
+### **Media Management**
+
+1. Open the WebUI and go to **Settings** > **Media Management**.
+2. Click **Add Root Folder**, add the path `/COMMON_PATH/sonarr/tv`, and click **OK**.
+3. Click **Show Advanced**, scroll down to **Importing**, and enable **Use Hardlinks instead of Copy**.
+
+<div style="text-align: center">
+    <img src="image/sonarr/son1.png" style="margin: 15px 10px;">
+</div>
+
+_Note: if entering `qbittorrent` as the Host does not work, try entering the IP address instead (ex: `192.168.x.x`)_
+
+### **Download Clients**
+
+1. In the WebUI, go to **Settings** > **Download Clients**.
+2. Click **+** under **Download Clients**, then select **qBittorrent**.
+3. Fill in the fields as follows:
+   - **Name**: `qBittorrent` (or another name of your choice)
+   - **Host**: `qbittorrent`
+   - **Username**: `admin`
+   - **Password**: `adminadmin` (change it if you've modified it in qBittorrent)
+   - **Category**: `sonarr` (this should match the category set in qBittorrent)
+4. Click **Test**. If you see a checkmark, it means the connection is working.
+5. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/sonarr/son2.png" style="margin: 15px 10px;">
+</div>
+
+### **Indexer Jackett (Optional)**
+
+1. In the WebUI, go to **Settings** > **Indexers**.
+2. Click **+** under **Add Indexer**, then select **Torznab**.
+3. Fill in the fields as follows:
+   - **Name**: `Torznab` (or another name of your choice)
+   - **URL**: `http://Jackett:9117/api/v2.0/indexers/YOUR_INDEXERS/results/torznab/`
+   - **ApiKey**: Find the API key in the home menu at the top right.
+4. Click **Test**. If you see a checkmark, it means the connection is working; if not, there is an error.
+5. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/sonarr/son3.png" style="margin: 15px 10px;">
+</div>
+
+**[`^        back to top        ^`](#table-of-contents)**
+
+---
+
+## **Prowlarr**
+
+### **Configure Torrent Indexers**
+
+1. Open the WebUI and go to **Indexers** > **Add New Indexer**.
+2. Select **1337x** (or another tracker of your choice).
+   - You can modify the settings as per your preference, but the default values generally work well.
+   - Sorting by **Seeders** can be useful for faster downloads.
+3. Click **Test**. If you see a checkmark, the connection is functional; otherwise, there's an error.
+4. Click **Save**.
+
+### **Configure FlareSolverr**
+
+1. Go to **Settings** and click **+** under **Indexer**.
+2. Select **FlareSolverr** and fill in the information as follows:
+   - **Name**: `FlareSolverr`
+   - **Tags**: `flaresolverr`
+   - **Host**: `http://flaresolverr:8191/`
+3. Click **Test** to check the connection.
+4. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/prowlarr/pro1.png" style="margin: 15px 10px;">
+</div>
+
+### **Configure Radarr**
+
+1. Go to **Settings** and click **Apps**.
+2. Select **Radarr** and fill in the information as follows:
+   - **Sync Level**: `Full Sync`
+   - **Prowlarr Server**: `http://prowlarr:9696`
+   - **Radarr Server**: `http://radarr:7878`
+   - **ApiKey**: Find the API key in the Radarr interface under **Settings** > **General** > **API Key**.
+3. Click **Test** to check the connection.
+4. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/prowlarr/pro2.png" style="margin: 15px 10px;">
+</div>
+
+### **Configure Sonarr**
+
+1. Go to **Settings** and click **Apps**.
+2. Select **Sonarr** and fill in the information as follows:
+   - **Sync Level**: `Full Sync`
+   - **Prowlarr Server**: `http://prowlarr:9696`
+   - **Sonarr Server**: `http://sonarr:8989`
+   - **ApiKey**: Find the API key in the Sonarr interface under **Settings** > **General** > **API Key**.
+3. Click **Test** to check the connection.
+4. Click **Save**.
+
+<div style="text-align: center">
+    <img src="image/prowlarr/pro3.png" style="margin: 15px 10px;">
+</div>
+
+**[`^        back to top        ^`](#table-of-contents)**
+
+---
+
+## **Jellyfin**
+
+### **Initial Setup**
+
+1. Open the Web UI by going to the **DOCKER** tab, click the app logo for Jellyfin, and select **WebUI**.
+2. Select a preferred display language (or use the default English). Click **Next** ➝.
+3. Create an administrator account, fill out the credentials as desired, and click **Next** ➝.
+4. Click **Add Media Library** and fill in the following:
+   - **Content type**: Movies
+   - **Folders**: `/COMMON_PATH/radarr/movies`
+   - Configure the rest as you see fit; the default settings are typically fine.
+5. Click **OK**.
+6. Click **Add Media Library** again and fill in the following:
+   - **Content type**: Shows
+   - **Folders**: `/COMMON_PATH/sonarr/tv`
+   - Configure the rest as you see fit; the default settings are typically fine.
+7. Click **OK**.
+8. Click **Next** ➝.
+9. Configure the **Preferred Metadata Language** (or use the default), and click **Next** ➝.
+10. In **Configure Remote Access**, leave **Allow Remote Connections to this Server** checked and **Enable Automatic Port Mapping** unchecked.
+11. Click **Next** ➝, then click **Finish**.
+12. Sign in with your administrator account.
+
+Once you sign in, if you already have media in your `/COMMON_PATH/*` folders, it should start appearing in Jellyfin. If not, the content will populate as the folders are filled.
+
+### **Adding Users to Jellyfin**
+
+If you want other users to access your Jellyfin server, you can create additional user accounts. This step is optional if you're the only user.
+
+1. Open the left menu by clicking on the three horizontal lines (hamburger menu) in the upper left corner.
+2. Select **Users** and click the **+** button on the left to add a new user.
+3. Fill in the following details for the new user:
+   - **Name**: `<username>`
+   - **Password**: `<password>`
+   - Under **Library Access**, check the boxes for the libraries (Movies, TV shows, etc.) that you want the user to have access to.
+4. Click **Save** to create the user.
+5. Repeat this process for all users you wish to add to the server.
+
+**[`^        back to top        ^`](#table-of-contents)**
+
+---
+
+## **Jellyseerr**
+
+### **Sign In / Configuration**
+
+1. Open the WebUI and in the **Welcome to Jellyseerr** screen, select **Use your Jellyfin account**.
+2. Fill in the information as follows:
+   - **Jellyfin URL**: `http://jellyfin:8096/`
+   - **Email Address**: `<your email address>`
+   - **Username**: `<your Jellyfin username>`
+   - **Password**: `<your Jellyfin password>`
+3. Select **Sign In**.
+4. Go to **Sync Libraries** under **Jellyfin Libraries**, select your Jellyfin libraries, then click **Continue**.
+
+### **Integrating with Radarr**
+
+1. Go to **Radarr Settings**, then click **Add Radarr Server**.
+2. Fill in the information as follows:
+   - **Default Server**: Check this box
+   - **Server Name**: `Radarr`
+   - **Name or IP Address**: `http://radarr`
+   - **Port**: `7878`
+   - **API Key**: Find the API key in the Radarr interface under **Settings** > **General** > **API Key**.
+3. Click **Test** to check the connection.
+4. Click **Save Changes**.
+
+### **Integrating with Sonarr**
+
+1. Go to **Sonarr Settings**, then click **Add Sonarr Server**.
+2. Fill in the information as follows:
+   - **Default Server**: Check this box
+   - **Server Name**: `Sonarr`
+   - **Name or IP Address**: `http://sonarr`
+   - **Port**: `8989`
+   - **API Key**: Find the API key in the Sonarr interface under **Settings** > **General** > **API Key**.
+3. Click **Test** to check the connection.
+4. Click **Save Changes**.
+
+**[`^        back to top        ^`](#table-of-contents)**
+
+---
+
+## **Bazarr**
+
+### **Initial Setup**
+
+1. Open the WebUI by navigating to `http://localhost:6767` (or replace `localhost` with your server's IP address).
+2. The setup wizard will guide you through the initial configuration:
+   - **Language**: Select your preferred language and click **Next**.
+   - **Authentication**: Configure authentication if desired (optional for local access).
+   - **General Settings**: Configure your general preferences.
+3. Click **Next** and then **Save**.
+
+> [!NOTE]  
+> **Path Configuration**: Since you're using the provided Docker Compose files, all directory paths and volume mappings are already configured correctly. Bazarr will automatically detect your Sonarr and Radarr libraries without needing manual path configuration.
+
+### **Configure Sonarr Integration**
+
+1. Go to **Settings** > **Sonarr**.
+2. Click **Add** and fill in the following information:
+   - **Name**: `Sonarr`
+   - **Enabled**: Check this box
+   - **Address**: `http://sonarr`
+   - **Port**: `8989`
+   - **Base URL**: Leave empty
+   - **API Key**: Find the API key in the Sonarr interface under **Settings** > **General** > **API Key**.
+   - **Minimum Score**: Set according to your preference (recommended: 70-80)
+3. Click **Test** to verify the connection.
+4. Click **OK** to save.
+
+### **Configure Radarr Integration**
+
+1. Go to **Settings** > **Radarr**.
+2. Click **Add** and fill in the following information:
+   - **Name**: `Radarr`
+   - **Enabled**: Check this box
+   - **Address**: `http://radarr`
+   - **Port**: `7878`
+   - **Base URL**: Leave empty
+   - **API Key**: Find the API key in the Radarr interface under **Settings** > **General** > **API Key**.
+   - **Minimum Score**: Set according to your preference (recommended: 70-80)
+3. Click **Test** to verify the connection.
+4. Click **OK** to save.
+
+### **Configure Subtitle Providers**
+
+1. Go to **Settings** > **Providers**.
+2. Add your preferred subtitle providers by clicking **Add** and selecting from available providers. Based on community recommendations, here are the most effective providers:
+
+**Recommended Free Providers (No Account Required):**
+   - **TVSubtitles**: Excellent for TV shows, no registration needed
+   - **YIFYSubtitles**: Great for movies, no registration needed
+   - **SuperSubtitles**: Good general provider, no registration needed
+   - **EmbeddedSubtitles**: Extracts subtitles from video files
+   - **AnimeTosho**: Specialized for anime content
+
+**Recommended Providers (Free Account Required):**
+   - **OpenSubtitles.com**: Free account required, much better than the old .org version
+   - **Addic7ed**: Free account required, excellent for TV shows
+
+> [!IMPORTANT]  
+> **Note about OpenSubtitles**: The old opensubtitles.org now requires a VIP subscription and is no longer recommended for free users. Use **opensubtitles.com** instead, which offers free accounts with good download limits.
+
+3. For providers requiring authentication:
+   - **OpenSubtitles.com**: Register at opensubtitles.com and use your username/password
+   - **Addic7ed**: Register at addic7ed.com and use your username/password
+4. Configure each provider according to your preferences and authentication requirements.
+5. Click **Save**.
+
+> [!TIP]  
+> Many users report achieving 99% subtitle coverage for movies and 90% for TV episodes using this combination of providers. 
+> *Provider recommendations based on community feedback from [r/bazarr](https://www.reddit.com/r/bazarr/comments/1fevojd/the_best_unlimited_provider/)*
+
+### **Configure Languages**
+
+1. Go to **Settings** > **Languages**.
+2. Select your preferred languages for subtitles:
+   - **Languages Filter**: Add the languages you want subtitles for
+   - **Default Enabled**: Check the box for languages you want enabled by default
+   - **Series**: Configure language preferences for TV series
+   - **Movies**: Configure language preferences for movies
+3. Click **Save**.
+
+### **Configure Subtitles**
+
+1. Go to **Settings** > **Subtitles**.
+2. Configure your subtitle preferences:
+   - **Download**: Set when to search for subtitles (recommended: Manually and when subtitles are wanted)
+   - **Subtitle Folder**: Configure how subtitles should be stored (recommended: Alongside media file)
+   - **Upgrade Subtitles**: Enable if you want Bazarr to replace existing subtitles with better ones
+3. Click **Save**.
+
+Once configured, Bazarr will automatically monitor your Sonarr and Radarr libraries and download subtitles based on your configured preferences.
+
+
+# **Updating Applications**
+
+To update the applications, you need to stop the running containers and remove the existing Docker images. You can use the following commands to perform these operations:
+
+```bash
+docker-compose down
+docker image prune -a
+```
+
+Then, you can run `docker-compose up -d` to restart the containers with the latest versions of the applications.
