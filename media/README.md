@@ -11,6 +11,26 @@ Server Specs
 | **Configs Disk** | 50gb SSD | 80gb SSD|
 | **Data Disk** | depends on size of library, HDD fine | depends on size of library, HDD fine |
 
+## Pre-Reqs
+
+Docker
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+```
+
+```bash
+sh get-docker.sh
+```
+
+```bash
+usermod -aG docker <user>
+```
+
 ## Environment Variables
 
 To run this stack, you will need to add the following environment variables to your .env file
