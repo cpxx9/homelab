@@ -133,6 +133,7 @@ qbittorrent:
 Paths needed:
 
 ${COMMON_PATH}/configs/nzbget
+
 ${DATA_PATH}/qbittorrent/downloads
 
 ```yaml
