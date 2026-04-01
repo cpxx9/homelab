@@ -31,6 +31,10 @@ sh get-docker.sh
 usermod -aG docker <user>
 ```
 
+**Set-up**
+
+Download the compose and .env files from this folder, put them in the *same* directory. I recomend something like ~/compose/isyyr
+
 # Environment Variables
 
 To run this stack, you will need to add the following environment variables to your .env file
@@ -416,6 +420,14 @@ npm:
       - ${COMMON_PATH}/npm/data:/data
       - ${COMMON_PATH}/npm/letsencrypt:/etc/letsencrypt
 ```
+
+# Starting the stack
+
+Navigate to where the compose file is. If following along, should be ~/compose/isyyr
+
+Run `docker compose up` or `docker compose up -d` (to immediately detach)
+
+If you make changes to the compose file, just run `docker compose up -d` from this directory, docker will rebuilt containers that have changes, will not touch containers with no changes.
 
 # Accessing Applications
 
