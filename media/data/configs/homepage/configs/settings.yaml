@@ -1,0 +1,23 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings/
+
+providers:
+  openweathermap: openweathermapapikey
+  weatherapi: weatherapiapikey
+layout:
+  Infrastructure:
+    style: row
+    columns: 2
+  Isyrr:
+    style: column
+    rows: 2
+    Media Group:
+      style: column
+      rows: 2
+      header: false
+    Content Management:
+      style: row
+      columns: 2
+      Managers:
+        style: row

@@ -1,0 +1,103 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Infrastructure:
+    - Management:
+        - px1-ilo:
+            href: <link to iLO>
+            description: Management for proxmox1 host
+    - Hosts:
+        - px1:
+            href: <link to px1>
+            description: proxmox1 host
+        - px2:
+            href: <link to px2>
+            description: proxmox2 host
+- Isyrr:
+    - Media Group:
+        - Media:
+            - Jellyfin:
+                icon: sh-jellyfin
+                href: <link to Jellyfin>
+                description: Personal streaming server
+                container: jellyfin
+                widget:
+                  type: jellyfin
+                  url: <link to jellyfin>
+                  key: <API KEY> <API KEY>
+                  enableBlocks: true
+                  enableNowPlaying: true
+                  enableUser: true
+                  enableMediaControl: false
+                  showEpisodeNumber: true
+                  expandOneStreamToTwoRows: false
+        - Requests & Indexers:
+            - Jellyseerr:
+                icon: sh-jellyseerr
+                href: <link to Jellyseerr>
+                description: Media requests
+                container: jellyseerr
+                widget:
+                  type: jellyseerr
+                  url: <link to jellyseerr>
+                  key: <API KEY>
+            - Prowlarr:
+                icon: sh-prowlarr
+                href: <link to Prowlarr>
+                description: Managing indexers
+                container: prowlarr
+                widget:
+                  type: prowlarr
+                  url: <link to prowlarr>
+                  key: <API KEY>
+            - Jackett:
+                icon: sh-jackett
+                href: <link to Jackett>
+                container: jackett
+                widget:
+                  type: jackett
+                  url: <link to jackett>
+                  password: <password>
+    - Content Management:
+        - Managers:
+            - Radarr:
+                icon: sh-radarr
+                href: <link to Radarr>
+                description: Film management
+                container: radarr
+                widget:
+                  type: radarr
+                  url: <link to radarr>
+                  key: <API KEY>
+                  enableQueue: true
+            - Sonarr:
+                icon: sh-sonarr
+                href: <link to Sonarr>
+                description: Series Management
+                container: sonarr
+                widget:
+                  type: sonarr
+                  url: <link to sonarr>
+                  key: <API KEY>
+                enableQueue: true
+        - Downloaders:
+            - qBittorrent:
+                icon: sh-qbittorrent
+                href: <link to qBittorrent>
+                container: qbittorrent
+                widget:
+                  type: qbittorrent
+                  url: <link to qbittorrent>
+                  username: qbitadmin
+                  password: <password>
+                  enableLeechProgress: true
+                  enableLeechSize: true
+            - NZBGet:
+                href: <link to NZBGet>
+                container: nzbget
+                widget:
+                  type: nzbget
+                  url: <link to nzbget>
+                  username: nzbgadmin
+                  password: <password>
