@@ -70,7 +70,9 @@ Below is each service in the compose file split up with more explanation.
 
 Paths needed:
 
-${COMMON_PATH}/configs/homepage/config
+${COMMON_PATH}/configs/homepage/configs
+
+- Edit the ${COMMON_PATH}/configs/homepage/configs/services.yaml with IPs, API keys, and Username/Passwords for each service
 
 ${COMMON_PATH}/configs/homepage/images
 
@@ -83,7 +85,7 @@ homepage:
     ports:
       - 3000:3000
     volumes:
-      - ${COMMON_PATH}/configs/homepage/config:/app/config
+      - ${COMMON_PATH}/configs/homepage/configs:/app/config
       - ${COMMON_PATH}/configs/homepage/images:/app/images
       - ${COMMON_PATH}/configs/homepage/icons:/app/icons
       - /var/run/docker.sock:/var/run/docker.sock:ro
